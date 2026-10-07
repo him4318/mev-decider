@@ -1,8 +1,11 @@
 # mev-decider
 
+> Inspiration was taken from [avbiswas/bev-decider](https://github.com/avbiswas/bev-decider).  
+> Check out his awesome video where he explained about the architecture and implementation of Choice-order invariant: [YouTube Video](https://www.youtube.com/watch?v=sF3CNPbWA8o).
+
 Run [**mev-decider**](https://huggingface.co/metalkeys/mev), a ModernBERT-based System One decision model. It reads a state (text or JSON) and typed questions about it, returning calibrated probabilities in a single forward pass. It uses TypeSafe Jev's question and answer format, allowing a local server to stand in for the `/v1/systemone` API.
 
-- **Bidirectional ModernBERT Backbone (~149M Base / ~395M Large).** Highly efficient transformer encoder running on laptop CPU, Apple Silicon, or GPU.
+- **Bidirectional ModernBERT Backbone (~395M Large).** Highly efficient transformer encoder running on laptop CPU, Apple Silicon, or GPU.
 - **Choice-order invariant.** Every candidate choice restarts at the identical starting position index $Q$, ensuring equidistant geometric relation to the prompt and state under RoPE coordinates. Native bidirectional attention allows all choices to mutually cross-attend, while configuring `local_attention: 16384` eliminates sliding-window artifacts and guarantees complete sequence-wide global attention. This is exact in fp32: reordering choices yields zero numerical drift. On GPU or Apple Silicon, default `precision="bf16"` inference runs at maximum throughput; pass `precision="fp32"` if perfect machine-precision invariance is required.
 - **Typed answers:** `choice` (a key and probabilities), `noul` (P(yes)), and `score` (an expected level and probabilities).
 

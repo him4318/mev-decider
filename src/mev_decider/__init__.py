@@ -1,0 +1,6 @@
+"""mev-decider: ModernBERT System One decision model with typed, calibrated answers."""
+
+from .decider import DEFAULT_MODEL, Decider, load
+
+__all__ = ["DEFAULT_MODEL", "Decider", "load"]
+__version__ = "0.1.0"

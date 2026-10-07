@@ -1,0 +1,45 @@
+[project]
+name = "mev-decider"
+version = "0.1.0"
+description = "mev-decider: ModernBERT System One decision model with typed, calibrated, choice-order-invariant answers"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Avishek Biswas" }]
+keywords = ["decision-model", "system-one", "classification", "calibration", "mev", "modernbert"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.4",
+    "transformers>=4.48",
+    "safetensors",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+serve = ["fastapi>=0.110", "uvicorn>=0.29"]
+
+[project.scripts]
+mev-decider = "mev_decider.cli:main"
+
+[project.urls]
+Model = "https://huggingface.co/metalkeys/mev"
+Repository = "https://github.com/avbiswas/bev-train"
+
+[dependency-groups]
+dev = ["pytest", "httpx", "fastapi", "uvicorn"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mev_decider"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
